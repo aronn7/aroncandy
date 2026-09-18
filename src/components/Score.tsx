@@ -1,0 +1,3 @@
+import { Star } from 'lucide-react';
+export function Stars({count=0}:{count:number}){return <div className="stars" aria-label={`${count} dari 3 bintang`}>{[1,2,3].map(n=><Star key={n} fill={n<=count?'currentColor':'none'} className={n<=count?'earned':''}/>)}</div>;}
+export default function Score({score,thresholds}:{score:number;thresholds:number[]}){return <div className="score-panel"><span className="label">SCORE</span><strong>{score.toLocaleString('id-ID')}</strong><div className="star-track"><div style={{width:`${Math.min(100,score/thresholds[2]*100)}%`}}/>{thresholds.map((t,i)=><Star key={i} className={score>=t?'earned':''} style={{left:`${t/thresholds[2]*95}%`}} size={21} fill={score>=t?'currentColor':'#eadfed'}/>)}</div></div>;}

@@ -1,0 +1,62 @@
+.special-effect{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden;border-radius:15px}.effect-striped-h i,.effect-striped-v i{display:block;position:absolute;background:#fff8ed;box-shadow:0 0 10px 4px #efb5f3,0 0 22px 9px #fff8;animation:beam .24s ease-out both}.effect-striped-h i{left:0;right:0;top:var(--effect-y);height:5px}.effect-striped-v i{top:0;bottom:0;left:var(--effect-x);width:5px}.effect-wrapped i{position:absolute;left:var(--effect-x);top:var(--effect-y);width:32%;aspect-ratio:1;border-radius:50%;border:6px solid #fff5c7;box-shadow:0 0 20px #f0a4d5;translate:-50% -50%;animation:shockwave .25s ease-out both}.effect-bomb{background:conic-gradient(from 0deg at var(--effect-x) var(--effect-y),#ff99ba55,#ffd57b55,#a5e09a55,#88cdf055,#c997eb55,#ff99ba55);animation:rainbow-flash .28s ease-out both;mix-blend-mode:screen}.candy-visual>img.special-token{position:absolute;right:-4%;top:-5%;width:40%;height:40%;filter:drop-shadow(0 1px 1px #5e367442)}.home-profile{background:none;font-size:11px;color:#ae96b7;margin:24px 0 -10px;min-height:28px}.home-profile:hover{color:#856194}.wallet .profile-button{display:inline-flex}@media(max-width:680px){.wallet .profile-button{display:none}.home-profile{font-size:10px;margin-top:21px}}@keyframes beam{0%{scale:.1;opacity:0}40%{scale:1;opacity:1}100%{scale:1.1;opacity:0}}@keyframes shockwave{from{scale:0;opacity:1}to{scale:2.2;opacity:0}}@keyframes rainbow-flash{0%{opacity:0}35%{opacity:1}100%{opacity:0}}
+/* ============ SPECIAL CANDY ANIMATIONS ============ */
+/* Idle: soft glow + gentle pulse (GPU-friendly: only scale/opacity/filter) */
+.candy-visual.striped-h,.candy-visual.striped-v,.candy-visual.wrapped,.candy-visual.bomb{animation:special-idle 2s ease-in-out infinite}
+.candy-visual.striped-h{animation-duration:1.6s}
+.candy-visual.striped-v{animation-duration:1.7s}
+.candy-visual.wrapped{animation-duration:1.9s}
+.candy-visual.bomb{animation-duration:2.3s}
+@keyframes special-idle{0%,100%{scale:1;filter:drop-shadow(0 0 3px #f7c9ec59) drop-shadow(0 3px 2px #64467b20)}50%{scale:1.045;filter:drop-shadow(0 0 9px #f7c9ecb3) drop-shadow(0 3px 2px #64467b20)}}
+/* Moving highlight sweep across special candy */
+.candy-visual.striped-h::before,.candy-visual.striped-v::before,.candy-visual.wrapped::before,.candy-visual.bomb::before{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(115deg,transparent 30%,#ffffff8c 48%,transparent 62%);background-size:260% 260%;animation:special-sheen 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes special-sheen{0%,100%{background-position:120% 0;opacity:.2}50%{background-position:-40% 0;opacity:.75}}
+/* Striped: energy pulse traveling along stripe direction */
+.candy-visual.striped-h::after,.candy-visual.striped-v::after{content:'';position:absolute;inset:38% -12%;border-radius:6px;background:linear-gradient(90deg,transparent,#fff9,transparent);opacity:0;animation:stripe-energy 1.5s ease-in-out infinite;pointer-events:none}
+.candy-visual.striped-h::after{inset:38% -12%;background:linear-gradient(90deg,transparent,#fff9,transparent)}
+.candy-visual.striped-v::after{inset:-12% 38%;background:linear-gradient(180deg,transparent,#fff9,transparent)}
+@keyframes stripe-energy{0%{opacity:0;translate:-35% 0;scale:.7 1}45%{opacity:.9}100%{opacity:0;translate:35% 0;scale:.7 1}}
+.candy-visual.striped-v::after{animation-name:stripe-energy-v}
+@keyframes stripe-energy-v{0%{opacity:0;translate:0 -35%;scale:1 .7}45%{opacity:.9}100%{opacity:0;translate:0 35%;scale:1 .7}}
+/* Wrapped: sparkle shimmer on the wrapper */
+.candy-visual.wrapped{animation-name:special-idle-breath}
+@keyframes special-idle-breath{0%,100%{scale:1;filter:drop-shadow(0 0 4px #ffecbc80)}50%{scale:1.05;filter:drop-shadow(0 0 12px #ffecbcd9)}}
+.candy-visual.wrapped::before{border-radius:26%;animation-duration:1.7s}
+/* Color bomb: rainbow rotating glow */
+.candy-visual.bomb{animation-name:bomb-idle}
+@keyframes bomb-idle{0%,100%{scale:1;filter:drop-shadow(0 0 5px #d493ff73) hue-rotate(0deg)}50%{scale:1.05;filter:drop-shadow(0 0 14px #d493ffb0) hue-rotate(40deg)}}
+.candy-visual.bomb::before{border-radius:50%;animation-duration:1.9s;filter:hue-rotate(90deg)}
+/* Activation: candy pulse before blast */
+.activate-pulse .candy-visual{animation:special-activate .3s ease-out both!important}
+@keyframes special-activate{0%{scale:1}55%{scale:1.18}100%{scale:.95;opacity:.85}}
+/* Destruction: light burst sequence — pulse→glow→burst→fade (250-500ms) */
+.matched .candy-visual:is(.striped-h,.striped-v,.wrapped,.bomb){animation:special-destroy .4s ease-out both!important}
+@keyframes special-destroy{0%{scale:1;filter:drop-shadow(0 0 0 transparent)}25%{scale:1.2;filter:drop-shadow(0 0 10px #fff)}55%{scale:1.35;filter:drop-shadow(0 0 22px #fff)}100%{scale:0;opacity:0;filter:drop-shadow(0 0 0 transparent)}}
+/* Light burst element (rendered on hit) — radial white core + colored halo ring */
+.light-burst{position:absolute;width:11.1112%;height:11.1112%;padding:0;z-index:6;pointer-events:none}
+.light-burst i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#fff 12%,var(--burst-color,#f7c9ec) 38%,transparent 68%);animation:light-burst .38s ease-out both;mix-blend-mode:screen}
+.light-burst b{position:absolute;inset:-12%;border-radius:50%;border:3px solid var(--burst-color,#fff);opacity:.9;animation:burst-ring .45s ease-out both}
+@keyframes light-burst{0%{scale:.2;opacity:1}45%{scale:1.25;opacity:.9}100%{scale:2;opacity:0}}
+@keyframes burst-ring{0%{scale:.3;opacity:.95}100%{scale:2.3;opacity:0}}
+/* Board darken for color bomb activation */
+.board-darken{position:absolute;inset:0;background:#3a2450;opacity:0;z-index:4;pointer-events:none;transition:opacity .18s;border-radius:15px}
+.board-darken.on{opacity:.55}
+/* Sweet Finale overlay text */
+.finale-banner{position:absolute;inset:0;z-index:10;display:grid;place-items:center;pointer-events:none}
+.finale-banner>div{text-align:center;background:#fffdf6e6;border:2px solid #fff;border-radius:24px;padding:18px 30px;box-shadow:0 10px 40px #9167a340;animation:finale-enter .45s cubic-bezier(.2,.8,.3,1.2) both}
+.finale-banner h3{font:600 clamp(24px,6vw,40px)/1.15 'Fredoka',sans-serif;letter-spacing:-.5px;margin:0;background:linear-gradient(90deg,#ed639b,#8052b2,#ed639b);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:finale-shine 1.6s linear infinite}
+.finale-banner p{margin:6px 0 0;font-size:clamp(12px,3vw,15px);color:#a087ae;font-weight:600}
+.finale-banner .finale-sub{color:#d879a9;font-size:clamp(14px,3.6vw,19px)}
+@keyframes finale-enter{from{opacity:0;scale:.8;translate:0 14px}to{opacity:1;scale:1;translate:0 0}}
+@keyframes finale-shine{to{background-position:200% 0}}
+/* Floating +SPECIAL text at converted tile */
+.float-bonus{position:absolute;z-index:11;pointer-events:none;font:800 clamp(13px,3vw,18px) 'Fredoka',sans-serif;color:#fff;text-shadow:0 2px 0 #c86ba7,0 0 10px #f0a4d5;translate:-50% -50%;animation:float-bonus .8s ease-out both}
+@keyframes float-bonus{0%{scale:.4;opacity:0}25%{scale:1.15;opacity:1}100%{scale:1;opacity:0;translate:-50% -260%}}
+/* Conversion: normal→striped spin/pulse/wrap */
+.converting .candy-visual{animation:special-convert .42s ease-in-out both!important}
+@keyframes special-convert{0%{scale:1;filter:none}30%{scale:1.12;filter:drop-shadow(0 0 8px #ffe9a8) brightness(1.25)}55%{rotate:180deg;scale:.92;filter:drop-shadow(0 0 14px #f7c9ec)}100%{rotate:360deg;scale:1.06;filter:drop-shadow(0 0 10px #f7c9ecb3)}}
+/* Star pop when a star threshold is crossed during finale */
+.star-pop{position:absolute;inset:0;z-index:12;display:grid;place-items:center;pointer-events:none}
+.star-pop svg{width:clamp(64px,18vw,110px);height:auto;color:#f4c14b;filter:drop-shadow(0 0 18px #e8b54b);animation:star-pop .7s cubic-bezier(.2,.8,.3,1.4) both}
+@keyframes star-pop{0%{scale:0;rotate:-30deg;opacity:0}60%{scale:1.3;rotate:6deg;opacity:1}100%{scale:1;rotate:0;opacity:1}}
+/* Respect reduced motion */
+.reduce-motion .candy-visual.striped-h,.reduce-motion .candy-visual.striped-v,.reduce-motion .candy-visual.wrapped,.reduce-motion .candy-visual.bomb{animation:none!important}

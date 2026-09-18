@@ -1,0 +1,4 @@
+import { Hammer,Shuffle,Rainbow } from 'lucide-react';
+import { BOOSTERS,type BoosterType } from '@/config/boosters';
+const ICONS={hammer:Hammer,shuffle:Shuffle,rainbow:Rainbow};
+export default function BoosterBar({counts,selected,disabled,onUse}:{counts:Record<BoosterType,number>;selected:BoosterType|null;disabled:boolean;onUse:(b:BoosterType)=>void}){return <div className="booster-bar">{(Object.keys(BOOSTERS) as BoosterType[]).map(b=>{const Icon=ICONS[b];return <button key={b} className={`booster ${b} ${selected===b?'active':''}`} disabled={disabled} onClick={()=>onUse(b)} aria-label={`${BOOSTERS[b].name}, ${counts[b]>0?`${counts[b]} tersedia`: `beli ${BOOSTERS[b].cost} koin`}`} aria-pressed={selected===b} title={BOOSTERS[b].description}><span className="booster-icon"><Icon/><i>{counts[b]||'+'}</i></span><span>{BOOSTERS[b].name}</span>{!counts[b]&&<small>{BOOSTERS[b].cost} koin</small>}</button>;})}</div>;}

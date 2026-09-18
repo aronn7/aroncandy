@@ -1,0 +1,156 @@
+﻿TAP version 13
+# Subtest: all 20 configurations: no initial matches, legal moves, valid masks and achievable color targets across 600 boards
+ok 1 - all 20 configurations: no initial matches, legal moves, valid masks and achievable color targets across 600 boards
+  ---
+  duration_ms: 2575.9452
+  type: 'test'
+  ...
+# Subtest: diagonal, distant and blocker swaps are rejected without spending moves
+ok 2 - diagonal, distant and blocker swaps are rejected without spending moves
+  ---
+  duration_ms: 3.3337
+  type: 'test'
+  ...
+# Subtest: invalid adjacent swap animates then returns exactly to its original board
+ok 3 - invalid adjacent swap animates then returns exactly to its original board
+  ---
+  duration_ms: 1.5995
+  type: 'test'
+  ...
+# Subtest: 4, 5 and connected T/L patterns create the correct special
+ok 4 - 4, 5 and connected T/L patterns create the correct special
+  ---
+  duration_ms: 0.4095
+  type: 'test'
+  ...
+# Subtest: gravity respects gaps and fixed blockers and preserves surviving identities
+ok 5 - gravity respects gaps and fixed blockers and preserves surviving identities
+  ---
+  duration_ms: 0.7143
+  type: 'test'
+  ...
+# Subtest: ice cracks, blocker adjacency and objectives count once
+ok 6 - ice cracks, blocker adjacency and objectives count once
+  ---
+  duration_ms: 0.6688
+  type: 'test'
+  ...
+# Subtest: color bomb + normal clears exactly the target color and the bomb
+ok 7 - color bomb + normal clears exactly the target color and the bomb
+  ---
+  duration_ms: 0.5343
+  type: 'test'
+  ...
+# Subtest: all special combinations activate with bounded board coordinates
+not ok 8 - all special combinations activate with bounded board coordinates
+  ---
+  duration_ms: 1.3128
+  type: 'test'
+  location: 'C:\\Users\\ahmad\\Documents\\Belajar dirumah\\WebGame\\Candy\\tests\\engine.test.ts:29:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'candy')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\ahmad\Documents\Belajar dirumah\WebGame\Candy\tests\engine.test.ts:29:264)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: shuffle preserves blockers/items and leaves no matches and a playable move
+ok 9 - shuffle preserves blockers/items and leaves no matches and a playable move
+  ---
+  duration_ms: 2.0771
+  type: 'test'
+  ...
+# Subtest: drop items count only at the actual bottom of a column
+ok 10 - drop items count only at the actual bottom of a column
+  ---
+  duration_ms: 0.5979
+  type: 'test'
+  ...
+# Subtest: one hit on layered ice consumes the candy and refills under the surviving layer
+not ok 11 - one hit on layered ice consumes the candy and refills under the surviving layer
+  ---
+  duration_ms: 1.5359
+  type: 'test'
+  location: 'C:\\Users\\ahmad\\Documents\\Belajar dirumah\\WebGame\\Candy\\tests\\engine.test.ts:32:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'candy')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\ahmad\Documents\Belajar dirumah\WebGame\Candy\tests\engine.test.ts:32:273)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: valid moves cascade to stability, decrease moves once, and replay deterministically
+not ok 12 - valid moves cascade to stability, decrease moves once, and replay deterministically
+  ---
+  duration_ms: 49814.6973
+  type: 'test'
+  location: 'C:\\Users\\ahmad\\Documents\\Belajar dirumah\\WebGame\\Candy\\tests\\engine.test.ts:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(['WIN','LOSE'].includes(g.phase))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\ahmad\Documents\Belajar dirumah\WebGame\Candy\tests\engine.test.ts:33:773)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: boosters spend no moves, wins require all objectives, and terminal games reject input
+ok 13 - boosters spend no moves, wins require all objectives, and terminal games reject input
+  ---
+  duration_ms: 9.5424
+  type: 'test'
+  ...
+# Subtest: saved progress tolerates corruption and lives refill without exceeding five
+not ok 14 - saved progress tolerates corruption and lives refill without exceeding five
+  ---
+  duration_ms: 11.8514
+  type: 'test'
+  location: 'C:\\Users\\ahmad\\Documents\\Belajar dirumah\\WebGame\\Candy\\tests\\engine.test.ts:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    100 !== 20
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 20
+  actual: 100
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\ahmad\Documents\Belajar dirumah\WebGame\Candy\tests\engine.test.ts:35:233)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 10
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 52984.1716

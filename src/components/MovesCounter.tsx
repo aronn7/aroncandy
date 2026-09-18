@@ -1,0 +1,1 @@
+export default function MovesCounter({moves}:{moves:number}){return <div className={`moves-counter ${moves<=5?'low':''}`}><span className="label">MOVES</span><strong>{moves}</strong><small>langkah tersisa</small></div>;}

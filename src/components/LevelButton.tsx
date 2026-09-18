@@ -1,0 +1,3 @@
+import { Lock,Play } from 'lucide-react';
+import { Stars } from './Score';
+export default function LevelButton({id,unlocked,current,stars,onSelect}:{id:number;unlocked:boolean;current:boolean;stars:number;onSelect:()=>void}){return <div className={`level-node ${current?'current':''} ${unlocked?'unlocked':'locked'}`}><button disabled={!unlocked} onClick={onSelect} aria-label={`Level ${id}${unlocked?`, ${stars} bintang`:', terkunci'}`}>{unlocked?id:<Lock size={20}/>}</button>{current?<span className="current-tag"><Play size={10} fill="currentColor"/> YOU ARE HERE</span>:stars>0?<Stars count={stars}/>:<span className="level-number">LEVEL {id}</span>}</div>;}
