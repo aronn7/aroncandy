@@ -28,15 +28,14 @@ export async function getAuthSnapshot(): Promise<AuthSnapshot> {
 export async function signIn(email: string) {
   const db = database(); if (!db) throw new Error('Login online belum diaktifkan. Kamu tetap bisa bermain sebagai tamu.');
   if (!EMAIL_RE.test(email)) throw new Error('Format email tidak valid.');
-  const { error } = await db.auth.signInWithOtp({ email: email.trim().toLowerCase(), options: { emailRedirectTo: `${origin()}/auth/callback` } });
+  const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined;
+  const { error } = await db.auth.signInWithOtp({ email: email.trim().toLowerCase(), options: { emailRedirectTo: redirectTo } });
   if (error) throw new Error(friendly(error.message));
 }
 
 export async function signOut() {
   const db = database(); if (db) await db.auth.signOut();
 }
-
-const origin = () => (typeof window !== 'undefined' ? window.location.origin : undefined);
 
 const friendly = (m: string) =>
   m.includes('already registered') || m.includes('already exists')
@@ -51,8 +50,6 @@ const friendly = (m: string) =>
             ? 'Email kamu belum diverifikasi.'
             : 'Login belum berhasil. Coba lagi.';
 
-const origin = () => (typeof window !== 'undefined' ? window.location.origin : undefined);
-
 /** Register a new account: validation happens client-side, verification is done by Supabase. */
 export async function registerWithPassword(email: string, password: string, username: string) {
   const db = database();
@@ -60,11 +57,12 @@ export async function registerWithPassword(email: string, password: string, user
   if (!EMAIL_RE.test(email)) throw new Error('Format email tidak valid.');
   if (!USERNAME_RE.test(username)) throw new Error('Username 3-16 karakter: huruf, angka, dan underscore.');
   if (password.length < 8) throw new Error('Password minimal 8 karakter.');
+  const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined;
   const { data, error } = await db.auth.signUp({
     email: email.trim().toLowerCase(),
     password,
     options: {
-      emailRedirectTo: `${origin()}/auth/callback`,
+      emailRedirectTo: redirectTo,
       data: { username: username.trim() },
     },
   });
@@ -77,10 +75,11 @@ export async function registerWithPassword(email: string, password: string, user
 export async function resendVerification(email: string) {
   const db = database();
   if (!db) throw new Error('Layanan akun belum tersedia.');
+  const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined;
   const { error } = await db.auth.resend({
     type: 'signup',
     email: email.trim().toLowerCase(),
-    options: { emailRedirectTo: `${origin()}/auth/callback` },
+    options: { emailRedirectTo: redirectTo },
   });
   if (error) throw new Error(friendly(error.message));
 }
@@ -90,9 +89,8 @@ export async function sendPasswordReset(email: string) {
   const db = database();
   if (!db) throw new Error('Layanan akun belum tersedia.');
   if (!EMAIL_RE.test(email)) throw new Error('Format email tidak valid.');
-  const { error } = await db.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-    redirectTo: `${origin()}/auth/callback?next=/reset-password`,
-  });
+  const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/auth/callback?next=/reset-password` : undefined;
+  const { error } = await db.auth.resetPasswordForEmail(email.trim().toLowerCase(), { redirectTo });
   if (error) throw new Error(friendly(error.message));
 }
 

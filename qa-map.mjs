@@ -1,0 +1,21 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+const errs = [];
+p.on('pageerror', e => errs.push(e.message));
+await p.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle' });
+await p.waitForSelector('.world-map', { timeout: 30000 });
+await p.waitForTimeout(2000);
+const stats = await p.evaluate(() => {
+  const stops = [...document.querySelectorAll('.map-stop')];
+  const rows = new Set(stops.map(s => Math.round(s.getBoundingClientRect().top / 30)));
+  const icons = [...document.querySelectorAll('.world-icon')].map(i => i.querySelector('svg') !== null);
+  return { stops: stops.length, distinctRows: rows.size, iconsOk: icons.every(Boolean), iconCount: icons.length, overflowX: document.documentElement.scrollWidth - window.innerWidth };
+});
+await p.screenshot({ path: 'map-desktop.png' });
+await p.setViewportSize({ width: 390, height: 844 });
+await p.waitForTimeout(1000);
+const mobOverflow = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+await p.screenshot({ path: 'map-mobile.png' });
+console.log(JSON.stringify({ stats, mobOverflow, errs }, null, 2));
+await b.close();
